@@ -6,6 +6,7 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
+  config.vm.network "forwarded_port", guest: 80, host: 8080
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
@@ -69,5 +70,7 @@ Vagrant.configure("2") do |config|
     export DEBIAN_FRONTEND=noninteractive
     apt-get -y install apache2 mysql-server php5-mysql php5 libapache2-mod-php5
     mysql_install_db
+    mysql -uroot -e 'create database hello_world'
+    mysql -u root hello_world < /vagrant/hello_world.sql
   SHELL
 end
